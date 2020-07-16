@@ -43,8 +43,7 @@ The following parameters can be set on ODBC foreign server<br>
 Assume that foreign DB2 database is referenced in ODBC as *TESTDB* and the foreign DB2 table is *test*.<br>
 DB2 test table was created using the following command.
 > db2 "create table test (id int, name varchar(100))"<br>
-<br>
-> db2 "insert into test values(1,'name1')"
+> db2 "insert into test values(1,'name1')"<br>
 
 ```
 CREATE EXTENSION db2odbc_fdw;
