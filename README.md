@@ -41,7 +41,9 @@ The following parameters can be set on ODBC foreign server<br>
 ## Example 
 Assume that foreign DB2 database is referenced in ODBC as *TESTDB* and the foreign DB2 table is *test*.<br>
 DB2 test table was created using the following command.
-> db2 "create table test (id int, name varchar(100))"
+> db2 "create table test (id int, name varchar(100))"<br>
+<br>
+> db2 "insert into test values(1,'name1')"
 
 ```
 CREATE EXTENSION db2odbc_fdw;
@@ -52,6 +54,16 @@ CREATE USER MAPPING FOR postgres SERVER db2odbc_server OPTIONS (username 'db2ins
 
 CREATE FOREIGN TABLE db2test ( id int, name varchar(100)) SERVER db2odbc_server  OPTIONS ( sql_query 'select * from TEST'  );
 ```
+Test
+> select * from db2test;<br>
+```
+ id | name  
+----+-------
+  1 | name1
+(1 row)
+
+```
+
 
 The following parameter can be set on a ODBC foreign table:
 
