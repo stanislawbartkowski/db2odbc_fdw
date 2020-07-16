@@ -46,7 +46,7 @@ DB2 test table was created using the following command.
 ```
 CREATE EXTENSION db2odbc_fdw;
 
-CREATE SERVER db2odbc_server FOREIGN DATA WRAPPER db2odbc_fdw OPTIONS (dsn 'TESTDB');
+CREATE SERVER db2odbc_server FOREIGN DATA WRAPPER db2odbc_fdw OPTIONS (dsn 'BIGTEST');
 
 CREATE USER MAPPING FOR postgres SERVER db2odbc_server OPTIONS (username 'db2inst1', password 'db2inst1');
 
