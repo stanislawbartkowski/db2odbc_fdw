@@ -1,0 +1,19 @@
+##########################################################################
+#
+# foreign data wrapper for db2/odbc 
+#
+# Copyright (c) 2020, PostgreSQL Global Development Group
+#
+# This software is released under the PostgreSQL Licence
+#
+# Author: stanislawbartkowski@gmail.com
+#
+# IDENTIFICATION
+#                 db2odbc_fdw/db2odbc_fdw.control
+# 
+##########################################################################
+
+comment = 'Foreign data wrapper for accessing remote databases using DB2/ODBC'
+default_version = '1.0'
+module_pathname = '$libdir/db2odbc_fdw'
+relocatable = true
