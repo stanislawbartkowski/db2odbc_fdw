@@ -1,15 +1,83 @@
-DB2ODBC FDW (beta) for PostgreSQL 9.1+
-===================================
+## DB2ODBC FDW (beta) for PostgreSQL 12
 
-This PostgreSQL extension implements a Foreign Data Wrapper (FDW) for
-remote databases using Open Database Connectivity(ODBC): http://msdn.microsoft.com/en-us/library/ms714562(v=VS.85).aspx
+This PostgreSQL extension for DB2 implements a Foreign Data Wrapper (FDW) to use DB2 ODBC connector. It is an adaptation of PostgresSQL ODBC connection https://github.com/CartoDB/odbc_fdw, because I'm not happy with that implementation.
+
+## Building
+
+Download source code and make the extension. <br>
+
+> git clone https://github.com/stanislawbartkowski/db2odbc_fdw.git<br>
+> cd ob2odbc_fdw<br>
+> make<br>
+
+The following target files are created if successful.
+```
+db2odbc_fdw.o
+db2odbc_fdw.so
+```
+## Installation
+
+As root user or sudo<br>
+> (sudo) make install<br>
+```
+usr/bin/mkdir -p '/usr/local/pgsql/lib'
+/usr/bin/mkdir -p '/usr/local/pgsql/share/extension'
+/usr/bin/mkdir -p '/usr/local/pgsql/share/extension'
+/usr/bin/install -c -m 755  db2odbc_fdw.so '/usr/local/pgsql/lib/db2odbc_fdw.so'
+/usr/bin/install -c -m 644 .//db2odbc_fdw.control '/usr/local/pgsql/share/extension/'
+/usr/bin/install -c -m 644 .//db2odbc_fdw--1.0.sql  '/usr/local/pgsql/share/extension/'
+```
+## Usage
+
+The following parameters can be set on ODBC foreign server<br>
+
+| Parameter | Description | Example
+|---|---|--|
+| dsn | The ODBC Database Source Name for the foreign DB2 database system you are connecting | BIGTEST
+| sql_query | User defined SQL statement for querying the foreign DB2 table | SELECT * FROM TEST
+| username | The username to authenticate in the foreign DB2 database | db2inst1
+| password | The password to authenticate in the foreign DB2 database | secret
+
+## Example 
+Assume that foreign DB2 database is referenced in ODBC as *TESTDB* and the foreign DB2 table is *test*.<br>
+DB2 test table was created using the following command.
+> db2 "create table test (id int, name varchar(100))"
+
+```
+CREATE EXTENSION db2odbc_fdw;
+
+CREATE SERVER db2odbc_server FOREIGN DATA WRAPPER db2odbc_fdw OPTIONS (dsn 'TESTDB');
+
+CREATE USER MAPPING FOR postgres SERVER db2odbc_server OPTIONS (username 'db2inst1', password 'db2inst1');
+
+CREATE FOREIGN TABLE db2test ( id int, name varchar(100)) ) SERVER db2odbc_server  OPTIONS ( sql_query 'select * from TEST'  );
+```
+
+The following parameter can be set on a ODBC foreign table:
 
 
-Building
---------
+sql_query:	User defined SQL statement for querying the foreign table.
 
-To build the code, you need to have one of the ODBC driver managers installed
-on your computer. 
+IMPORTANT: columns read from query are mapped to foreign table definition from left to write. Mapping
+is based on column order, not column name.
+
+The following parameter can be set on a user mapping for a ODBC
+foreign server:
+
+username:	The username to authenticate to the foreign server with.
+		
+password:	The password to authenticate to the foreign server with.
+
+
+
+## Configuration
+
+Configure DB2 ODBC connection to target DB2 database (look below for more details).
+
+
+Down
+
+To build the code, you need to have one of the ODBC driver managers installed on your computer. 
 
 A list of driver managers is available here: http://en.wikipedia.org/wiki/Open_Database_Connectivity
 
