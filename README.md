@@ -50,7 +50,7 @@ CREATE SERVER db2odbc_server FOREIGN DATA WRAPPER db2odbc_fdw OPTIONS (dsn 'BIGT
 
 CREATE USER MAPPING FOR postgres SERVER db2odbc_server OPTIONS (username 'db2inst1', password 'db2inst1');
 
-CREATE FOREIGN TABLE db2test ( id int, name varchar(100)) ) SERVER db2odbc_server  OPTIONS ( sql_query 'select * from TEST'  );
+CREATE FOREIGN TABLE db2test ( id int, name varchar(100)) SERVER db2odbc_server  OPTIONS ( sql_query 'select * from TEST'  );
 ```
 
 The following parameter can be set on a ODBC foreign table:
