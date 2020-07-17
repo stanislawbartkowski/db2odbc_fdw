@@ -4,7 +4,11 @@ This PostgreSQL extension for DB2 implements a Foreign Data Wrapper (FDW) to use
 
 Warning: I was unable to set up connection for PostgresSQL 12.1. When the query is executed, the server crashes because of memory violation problem. The crash happens while running this code.
 ```
-        add_path(baserel, path);
+static void db2_GetForeignPaths(PlannerInfo *root, RelOptInfo *baserel, Oid foreigntableid) {
+....
+    849:    add_path(baserel, path);
+....    
+}
 
 ```
 But the wrapper runs succesfully against PostgresSQL 12 created directly from source code.
