@@ -36,7 +36,7 @@ usr/bin/mkdir -p '/usr/local/pgsql/lib'
 ```
 ## Usage
 
-The following parameters can be set on ODBC foreign server<br>
+The following parameters can be set on DB2 ODBC foreign server<br>
 
 | Parameter | Description | Example
 |---|---|--|
@@ -75,5 +75,32 @@ Test
 ----+-------
   1 | name1
 (1 row)
+
+```
+## Configure DB2 Linux ODBC connection in Linux
+ODBC connection should be accessible for **postgres** user or globally. In the example below assuming:<br>
+* Remote host: 182.168.122.1
+* Remote DB port: 50000
+* Remote database : BIGTEST
+
+### DB2 full client installed
+If full DB2 client is installed, configuring ODBC is very easy. <br>
+Firstly catalog DB2 connection to remote server using DB2 CLI command line utility. Example assuming:<br>
+
+
+> db2 catalog tcpip node DB2THINK remote 192.168.122.1 SERVER 50000 <br>
+> db2 catalog database BIGTEST at node DB2THINK<br>
+
+Test<br>
+
+> db2 connect to bigtest user db2inst1<br>
+> db2 list tables<br>
+
+Configure Linux ODBC. Assuming DB2 11.1 client is installed.
+> sudo vi /etc/odbc.ini
+```
+[BIGTEST]
+Driver=/opt/ibm/db2/V11.1/lib64/libdb2o.so
+Description=Sample 64-bit DB2 ODBC Database
 
 ```
