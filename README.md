@@ -2,7 +2,7 @@
 
 This PostgreSQL extension for DB2 implements a Foreign Data Wrapper (FDW) to use DB2 ODBC connector. It is an adaptation of PostgresSQL ODBC connection https://github.com/CartoDB/odbc_fdw, because I'm not happy with that implementation.
 
-Warning: I was unable to set up connection for PostgresSQL 12.1. When the query is executed, the server crashes because of memory violation problem. The crash happens while running this code.
+Warning: I was unable to set up a connection for PostgresSQL 12.1. When the query is executed, the server crashes because of memory violation problem. The crash happens while running this code.
 ```
 static void db2_GetForeignPaths(PlannerInfo *root, RelOptInfo *baserel, Oid foreigntableid) {
 ....
@@ -11,7 +11,7 @@ static void db2_GetForeignPaths(PlannerInfo *root, RelOptInfo *baserel, Oid fore
 }
 
 ```
-But the wrapper runs succesfully against PostgresSQL 12 created directly from source code.
+But the wrapper runs successfully against PostgresSQL 12 created directly from source code.
 
 ## Building
 
@@ -45,7 +45,7 @@ The following parameters can be set on DB2 ODBC foreign server<br>
 | Parameter | Description | Example
 |---|---|--|
 | dsn | The ODBC Database Source Name for the foreign DB2 database system you are connecting | BIGTEST
-| sql_query | User defined SQL statement for querying the foreign DB2 table | SELECT * FROM TEST
+| sql_query | User-defined SQL statement for querying the foreign DB2 table | SELECT * FROM TEST
 | username | The username to authenticate in the foreign DB2 database | db2inst1
 | password | The password to authenticate in the foreign DB2 database | secret
 | cached (optional) | Native code causing connection retry | 
@@ -93,7 +93,7 @@ ODBC connection should be accessible for **postgres** user or globally. In the e
 * Remote database : BIGTEST
 
 ### DB2 full client installed
-Catalog DB2 connection to remote server using DB2 CLI command line utility. Example<br>
+Catalog DB2 connection to the remote server using DB2 CLI command-line utility. Example<br>
 
 > db2 catalog tcpip node DB2THINK remote 192.168.122.1 SERVER 50000 <br>
 > db2 catalog database BIGTEST at node DB2THINK<br>
