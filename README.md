@@ -2,7 +2,7 @@
 
 This PostgreSQL extension for DB2 implements a Foreign Data Wrapper (FDW) to use DB2 ODBC connector. It is an adaptation of PostgresSQL ODBC connection https://github.com/CartoDB/odbc_fdw, because I'm not happy with that implementation.
 
-Warning: I was unable to set up a connection for PostgresSQL 12.1. When the query is executed, the server crashes because of memory violation problem. The crash happens while running this code.
+Warning: I was unable to set up a connection for PostgresSQL 12.1 (2.module_el8.1.0+273+979c16e6). When the query is executed, the server crashes because of memory violation problem. The crash happens while running this code.
 ```
 static void db2_GetForeignPaths(PlannerInfo *root, RelOptInfo *baserel, Oid foreigntableid) {
 ....
