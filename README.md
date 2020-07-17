@@ -93,9 +93,7 @@ ODBC connection should be accessible for **postgres** user or globally. In the e
 * Remote database : BIGTEST
 
 ### DB2 full client installed
-If full DB2 client is installed, configuring ODBC is very easy. <br>
-Firstly catalog DB2 connection to remote server using DB2 CLI command line utility. Example<br>
-
+Catalog DB2 connection to remote server using DB2 CLI command line utility. Example<br>
 
 > db2 catalog tcpip node DB2THINK remote 192.168.122.1 SERVER 50000 <br>
 > db2 catalog database BIGTEST at node DB2THINK<br>
@@ -111,5 +109,83 @@ Configure Linux ODBC. Assuming DB2 11.1 client is installed.
 [BIGTEST]
 Driver=/opt/ibm/db2/V11.1/lib64/libdb2o.so
 Description=Sample 64-bit DB2 ODBC Database
+
+```
+### IBM Data Server Driver Package
+
+https://www.ibm.com/support/pages/howto-setup-odbc-application-connectivity-linux
+
+Prepare *db2dsdriver.cfg* configuration file.<br>
+
+> vi /opt/clidriver/cfg/db2dsdriver.cfg<br>
+```XML
+<configuration>
+
+  <dsncollection>
+
+     <!-- Both DSN alias point to the same database called SAMPLE on test.ibm.com:50000-->
+
+     <!-- 64-bit DSN alias -->
+    <dsn alias="BIGTEST" name="BIGTEST" host="192.168.122.1" port="50000"> </dsn>
+    <dsn alias="PERFDB" name="PERFDB" host="192.168.122.1" port="50000"> </dsn>
+
+    <databases>
+       <database name="BIGTEST" host="192.168.122.1" port="50000">
+       <database name="PERFDB" host="192.168.122.1" port="50000">
+       </database>
+   </databases>
+
+  </dsncollection>
+
+</configuration>
+
+```
+Test using DB2 CLI utility.
+> cd /opt/clidriver/bin<br>
+> /opt/clidriver/bin/db2cli execsql -dsn BIGTEST -user db2inst1 -passwd db2inst1
+```
+IBM DATABASE 2 Interactive CLI Sample Program
+(C) COPYRIGHT International Business Machines Corp. 1993,1996
+All Rights Reserved
+Licensed Materials - Property of IBM
+US Government Users Restricted Rights - Use, duplication or
+disclosure restricted by GSA ADP Schedule Contract with IBM Corp.
+> select * from test;
+select * from test;
+FetchAll:  Columns: 2
+  ID NAME 
+  1, name1
+FetchAll: 1 rows fetched.
+```
+
+Configure */etc/odbc.ini* ODBC configuration file.
+> vi /etc/odbc.ini<br>
+
+```[BIGTEST]
+Driver=/opt/clidriver/lib/libdb2o.so
+Description=Sample 64-bit DB2 ODBC Database
+
+```
+### Test ODBC connectivity
+
+>isql bigtest db2inst1 db2inst1<br>
+```
++---------------------------------------+
+| Connected!                            |
+|                                       |
+| sql-statement                         |
+| help [tablename]                      |
+| quit                                  |
+|                                       |
++---------------------------------------+
+SQL> select * from test;
++------------+-----------------------------------------------------------------------------------------------------+
+| ID         | NAME                                                                                                |
++------------+-----------------------------------------------------------------------------------------------------+
+| 1          | name1                                                                                               |
++------------+-----------------------------------------------------------------------------------------------------+
+SQLRowCount returns -1
+1 rows fetched
+SQL> 
 
 ```
