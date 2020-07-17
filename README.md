@@ -85,7 +85,7 @@ ODBC connection should be accessible for **postgres** user or globally. In the e
 
 ### DB2 full client installed
 If full DB2 client is installed, configuring ODBC is very easy. <br>
-Firstly catalog DB2 connection to remote server using DB2 CLI command line utility. Example assuming:<br>
+Firstly catalog DB2 connection to remote server using DB2 CLI command line utility. Example<br>
 
 
 > db2 catalog tcpip node DB2THINK remote 192.168.122.1 SERVER 50000 <br>
