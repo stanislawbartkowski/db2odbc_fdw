@@ -59,6 +59,11 @@ DB2 test table was created using the following command.
 ```
 CREATE EXTENSION db2odbc_fdw;
 
+( The FDW can be created by 'postgres' user only but 'postgres' can grant usage privilege.
+
+  grant usage on FOREIGN DATA WRAPPER  db2odbc_fdw to app_user;
+)
+
 CREATE SERVER db2odbc_server FOREIGN DATA WRAPPER db2odbc_fdw OPTIONS (dsn 'BIGTEST');
 
 (optional, cached connection)
