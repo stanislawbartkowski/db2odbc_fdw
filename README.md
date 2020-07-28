@@ -1,6 +1,8 @@
 ## DB2ODBC FDW for PostgreSQL 12
 
-This PostgreSQL extension for DB2 implements a Foreign Data Wrapper (FDW) to use DB2 ODBC connector. It is an adaptation of PostgresSQL ODBC connection https://github.com/CartoDB/odbc_fdw, because I'm not happy with that implementation.
+This PostgreSQL extension for DB2 implements a Foreign Data Wrapper (FDW) to use DB2 ODBC connector. It is an adaptation of PostgresSQL ODBC connection https://github.com/CartoDB/odbc_fdw, because I'm not happy with that implementation.<br>
+<br>
+There is also perfect and fully fledged DB2/CLI Postgresql wrapper, consider using it for more advanced usage. https://github.com/wolfgangbrandl/db2_fdw
 
 ## Building
 
